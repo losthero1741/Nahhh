@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Baby ❤️</title>
+
+<style>
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:'Comic Sans MS',cursive;
+  background:linear-gradient(120deg,#ff6f91,#ffb6c9,#ffc2d1);
+  min-height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* FLOATING IMAGES */
+.float{
+  position:absolute;
+  width:80px;
+  opacity:0.8;
+  animation:float 7s linear infinite;
+  pointer-events:none;
+}
+@keyframes float{
+  0%{transform:translateY(110vh) rotate(0deg);}
+  100%{transform:translateY(-150px) rotate(360deg);}
+}
+
+.container{
+  background:linear-gradient(135deg,#fff0f6,#ffe4ec);
+  padding:28px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 0 35px rgba(255,80,130,0.6);
+  border:3px solid #ff9ab3;
+  width:92%;
+  max-width:420px;
+  position:relative;
+  z-index:10;
+}
+
+h1{color:#d81b60;font-size:22px;}
+.bigLove{font-size:20px;color:black;}
+.loveText{font-size:16px;color:black;line-height:1.6;}
+
+button{
+  padding:12px 22px;
+  border:none;
+  border-radius:25px;
+  font-size:15px;
+  cursor:pointer;
+  margin:8px;
+}
+
+#yes{background:#ff4d79;color:white;}
+#no{background:#ccc;position:absolute;}
+
+.hidden{display:none;}
+
+.giftIcon{
+  width:70px;
+  margin:10px;
+  cursor:pointer;
+}
+
+/* POPUP */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:90;
+}
+
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:20px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(255,100,150,0.8);
+  width:92%;
+  max-width:420px;
+  max-height:90vh;
+  overflow-y:auto;
+  z-index:100;
+}
+
+.popup img{
+  width:100%;
+  max-width:350px;
+  border-radius:20px;
+  margin:15px auto;
+  display:block;
+}
+
+.zoomText{
+  font-size:13px;
+  color:#666;
+}
+
+.closeBtn{
+  background:#ff4d79;
+  color:white;
+  padding:12px 24px;
+  border-radius:25px;
+  border:none;
+  font-size:14px;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="floatZone"></div>
+
+<div class="container" id="page1">
+  <h1>Will you be my Valentine, baby? 🫶</h1>
+  <button id="yes">YES 💖</button>
+  <button id="no">NO 😒</button>
+</div>
+
+<div class="container hidden" id="page2">
+  <h1>YAYYYYY 🥰</h1>
+
+  <p class="bigLove">Dhani, my Don 💕</p>
+
+  <p class="loveText">
+    Even if we are far away, I will always support you my girl.<br>
+    My love for you never fades away ❤️
+  </p>
+
+  <h3>Your Gifts 🎁</h3>
+
+  <img src="gift-heart.png" class="giftIcon" onclick="openHeart()">
+  <img src="gift-loyalty.png" class="giftIcon" onclick="openLoyalty()">
+  <img src="gift-forever.png" class="giftIcon" onclick="openForever()">
+
+  <p class="bigLove">I love you forever 💕</p>
+</div>
+
+<script>
+/* SAFE REFERENCES */
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+const no=document.getElementById("no");
+const yes=document.getElementById("yes");
+
+/* MOVE NO BUTTON */
+function moveNo(){
+  no.style.left=Math.random()*70+"%";
+  no.style.top=Math.random()*70+"%";
+}
+no.onmouseover=moveNo;
+no.ontouchstart=moveNo;
+
+yes.onclick=()=>{
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+};
+
+/* FLOATING CAT + HEART */
+const floatPics=["cat.jpg","heart.png"];
+setInterval(()=>{
+  const img=document.createElement("img");
+  img.src=floatPics[Math.floor(Math.random()*floatPics.length)];
+  img.className="float";
+  img.style.left=Math.random()*90+"%";
+  img.style.animationDuration=(Math.random()*3+6)+"s";
+  document.getElementById("floatZone").appendChild(img);
+  setTimeout(()=>img.remove(),9000);
+},1200);
+
+/* POPUP HELPERS */
+function showPopup(html){
+  const overlay=document.createElement("div");
+  overlay.className="overlay";
+  const popup=document.createElement("div");
+  popup.className="popup";
+  popup.innerHTML=html;
+  document.body.appendChild(overlay);
+  document.body.appendChild(popup);
+}
+function closePopup(){
+  document.querySelector(".popup")?.remove();
+  document.querySelector(".overlay")?.remove();
+}
+
+/* HEART */
+function openHeart(){
+  showPopup(`
+    <h2>My heart is all yours, my love ❤️</h2>
+    <img src="her.jpg">
+    <div class="zoomText">zoom krloo 😋</div>
+    <button class="closeBtn" onclick="closePopup()">Close</button>
+  `);
+}
+
+/* LOYALTY */
+function openLoyalty(){
+  showPopup(`
+    <h2>This is us now 🐱💞</h2>
+    <img src="cat-young.jpg">
+    <button class="closeBtn" onclick="nextLoyalty()">Next ➜</button>
+  `);
+}
+function nextLoyalty(){
+  closePopup();
+  showPopup(`
+    <h2>Us… because we stayed loyal 🐱🤍</h2>
+    <img src="cat-old.jpg">
+    <p class="loveText">No matter what, I’ll always choose you.</p>
+    <button class="closeBtn" onclick="closePopup()">Forever 🫶</button>
+  `);
+}
+
+/* FOREVER */
+function openForever(){
+  showPopup(`
+    <h2>Will you be with me forever? 💞</h2>
+    <button onclick="yesForever()">YES</button>
+    <button id="popupNo">NO</button>
+  `);
+
+  const popupNo=document.getElementById("popupNo");
+  function movePopupNo(){
+    popupNo.style.position="absolute";
+    popupNo.style.left=Math.random()*200+"px";
+    popupNo.style.top=Math.random()*150+"px";
+  }
+  popupNo.onmouseover=movePopupNo;
+  popupNo.ontouchstart=movePopupNo;
+}
+function yesForever(){
+  closePopup();
+  showPopup(`
+    <h2>Let our pinky fingers decide 🤍</h2>
+    <img src="pinky.jpg">
+    <button class="closeBtn" onclick="closePopup()">Forever 🫶</button>
+  `);
+}
+</script>
+
+</body>
+</html>
